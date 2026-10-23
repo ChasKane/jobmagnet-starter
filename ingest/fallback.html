@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ingest</title>
+    <style>
+      body { font-family: sans-serif; background: #12141a; color: #e8eaef; padding: 16px; }
+      textarea { width: 100%; min-height: 80px; background: #1a1d27; color: #fff; }
+    </style>
+  </head>
+  <body>
+    <h1>Ingest</h1>
+    <p>Run <code>npm run build:ui</code> for the React chat. Fallback:</p>
+    <div id="log"></div>
+    <textarea id="msg" placeholder="add these: https://…"></textarea>
+    <button id="go">Submit</button>
+    <script>
+      document.getElementById('go').onclick = async () => {
+        const t = document.getElementById('msg').value;
+        const out = await window.magnetIngest.submit(t);
+        document.getElementById('log').textContent += '\n' + (out.reply || JSON.stringify(out));
+      };
+    </script>
+  </body>
+</html>

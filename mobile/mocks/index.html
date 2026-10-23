@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>JobMagnet — mobile mock</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <p class="page-label">
+      <strong>Phone mock of Electron.</strong> Same chrome: Jobs / Apply / Chat as bottom tabs.
+      Click through — this is the visual source of truth, not the Expo sketches.
+    </p>
+    <div class="phone" id="phone">
+      <div class="status-bar"><span>9:41</span><span>●●● LTE</span></div>
+      <div class="app-body">
+      <section class="stage is-on" data-stage="jobs">
+        <header class="header">
+          <div class="brand-row">
+            <div class="brand">JobMagnet</div>
+            <div class="brand-meta">
+              <span class="lifetime">2 / 184</span>
+              <button type="button" class="settings-btn" id="open-notices" aria-label="Notices">🔔<span class="notice-badge">1</span></button>
+              <button type="button" class="settings-btn" id="open-settings" aria-label="Settings">⚙</button>
+            </div>
+          </div>
+          <div class="nav-bar">
+            <button type="button" class="nav-btn" disabled>←</button>
+            <button type="button" class="nav-btn" disabled>→</button>
+            <button type="button" class="nav-btn">↻</button>
+          </div>
+          <form class="url-form" onsubmit="return false">
+            <input class="nav-url" value="https://jobs.contoso.com/apply/staff-engineer" />
+          </form>
+          <div class="filters">
+            <input class="search" placeholder="Search company or title…" value="" />
+            <div class="filter-row">
+              <label class="filter">Status
+                <select><option>Open</option><option>All</option><option>Submitted</option></select>
+              </label>
+              <label class="filter">YoE
+                <select><option>All</option></select>
+              </label>
+              <label class="filter">Level
+                <select><option>All</option></select>
+              </label>
+            </div>
+            <span class="filter-count">3 jobs</span>
+            <button type="button" class="ingest-btn" id="ingest-from-jobs">Ingest</button>
+          </div>
+        </header>
+        <div class="tab-list">
+          <div class="tab-row active">
+            <button type="button" class="tab" data-goto="apply">
+              <span class="logo">C</span>
+              <span>
+                <span class="name">Contoso</span>
+                <span class="role">Staff Engineer</span>
+              </span>
+            </button>
+            <button type="button" class="tab-autofill" aria-label="Autofill">⚡</button>
+          </div>
+          <div class="tab-row">
+            <button type="button" class="tab" data-goto="apply">
+              <span class="logo">N</span>
+              <span>
+                <span class="name">Northwind</span>
+                <span class="role">Senior Frontend</span>
+              </span>
+            </button>
+            <button type="button" class="tab-autofill" aria-label="Autofill">⚡</button>
+          </div>
+          <div class="tab-row submitted">
+            <button type="button" class="tab" data-goto="apply-dash">
+              <span class="logo">F</span>
+              <span>
+                <span class="name" style="color:#b7d4ff">Fabrikam</span>
+                <span class="role">Platform · submitted</span>
+              </span>
+            </button>
+            <button type="button" class="tab-autofill" disabled>—</button>
+          </div>
+        </div>
+        <div class="ingest-overlay" id="ingest-overlay" hidden>
+          <div class="ingest-head">
+            <button type="button" class="ingest-back" id="ingest-back">←</button>
+            <strong>Ingest</strong>
+          </div>
+          <p class="muted">Describe the search or paste apply URLs. Approve the plan, then the hunt fills this list.</p>
+          <aside class="ingest-plan">
+            <div class="ingest-plan-head">Search plan</div>
+            <p>50 jobs · greenhouse, ashby, lever · remote · 185k+</p>
+            <button type="button" class="ingest-approve" id="ingest-approve">Approve</button>
+          </aside>
+          <textarea class="voice-text" placeholder="Talk to Ingest…"></textarea>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="apply">
+        <div class="tracker">
+          <div class="tracker-row">
+            <div>
+              <div class="company">Contoso</div>
+              <div class="title">Staff Engineer · Remote</div>
+            </div>
+            <button type="button" class="surface-switch" id="surface-switch" hidden>Dashboard</button>
+          </div>
+          <button type="button" class="meta-toggle" id="meta-toggle" aria-expanded="false">▴</button>
+          <div class="meta is-collapsed" id="meta">
+            <div class="chip">
+              <span class="chip-label">Salary</span>
+              <span class="chip-value">$185–220k</span>
+            </div>
+            <div class="chip">
+              <span class="chip-label">YoE</span>
+              <span class="chip-value">8</span>
+            </div>
+            <div class="chip">
+              <span class="chip-label">Level</span>
+              <span class="chip-value">Staff</span>
+            </div>
+            <button type="button" class="chip btnish" data-goto="settings">
+              <span class="chip-label">Resume</span>
+              <span class="chip-value">Resume.pdf</span>
+            </button>
+          </div>
+          <ol class="steps" id="apply-steps" hidden>
+            <li class="step is-done"><span class="step-mark">✓</span><span class="step-label">JD</span></li>
+            <li class="step is-current"><span class="step-mark">3</span><span class="step-label">Fill</span></li>
+            <li class="step"><span class="step-mark">4</span><span class="step-label">Review</span></li>
+            <li class="step"><span class="step-mark">5</span><span class="step-label">Essays</span></li>
+            <li class="step"><span class="step-mark">6</span><span class="step-label">Done</span></li>
+          </ol>
+        </div>
+        <div class="webview" id="webview">
+          <h1>Apply — Staff Engineer</h1>
+          <p style="font-size:12px;color:#94a3b8;margin:0 0 8px">jobs.contoso.com · WebView</p>
+          <label>Legal first name</label>
+          <input value="Alex" data-filled />
+          <label>Work email</label>
+          <input value="chas@example.com" data-filled />
+          <label>LinkedIn</label>
+          <input placeholder="https://" />
+          <label>Why Contoso?</label>
+          <textarea rows="4" placeholder="Essay"></textarea>
+          <label>Resume</label>
+          <input type="file" disabled />
+          <p style="font-size:11px;color:#64748b;margin-top:8px">Vault attach — Autofill never opens this picker.</p>
+        </div>
+        <div class="dash" id="dash" hidden>
+          <p style="margin:0 0 8px;font-size:11px;color:#8b93a7">Submitted · process</p>
+          <div class="dash-event"><strong>Submitted</strong><br />Greenhouse confirmation · 2d ago</div>
+          <div class="dash-event"><strong>Recruiter screen</strong><br />Maya Chen · booked Thu 11:00</div>
+          <h2>People</h2>
+          <p>Maya Chen · Recruiter · maya@fabrikam.com</p>
+          <h2>Notes</h2>
+          <p>Asked about iframe embeds and Sportzcast. Follow up with Lupe ops paragraph.</p>
+        </div>
+        <div class="footer-bar">
+          <div class="footer-actions">
+            <button type="button" class="btn btn-primary" id="complete">Complete</button>
+            <div class="split">
+              <button type="button" class="btn btn-autofill split-main" id="autofill">Autofill</button>
+              <button type="button" class="btn btn-autofill split-arrow" id="split-toggle">▾</button>
+            </div>
+            <button type="button" class="btn btn-danger" id="pass">Pass</button>
+          </div>
+          <div class="split-menu" id="split-menu">
+            <button type="button" class="btn btn-stage">JD</button>
+            <button type="button" class="btn btn-stage">Resume</button>
+            <button type="button" class="btn btn-stage">Fill</button>
+            <button type="button" class="btn btn-stage">Essay</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="stage" data-stage="chat">
+        <div class="rail">
+          <div class="rail-tabs">
+            <button type="button" class="rail-tab">Contoso</button>
+            <button type="button" class="rail-tab is-active">Ingest</button>
+          </div>
+          <div class="rail-tabs">
+            <button type="button" class="rail-tab" data-rail="jd">JD</button>
+            <button type="button" class="rail-tab" data-rail="review">Review</button>
+            <button type="button" class="rail-tab is-active" data-rail="chat">Chat</button>
+          </div>
+
+          <div class="rail-panel" data-rail-panel="jd">
+            <pre class="jd-body">Staff Engineer — Contoso
+
+Ship the ops console. React/TS, Next.js, embeds.
+8+ years. Remote US.
+
+Nice: iframe/widget experience, trades-adjacent ops.</pre>
+          </div>
+
+          <div class="rail-panel" data-rail-panel="review">
+            <div class="review-row">
+              <div class="review-kind">Essay</div>
+              <div class="review-label">Why Contoso?</div>
+              <div class="review-why">No prior draft. Voice rules want a concrete embed example.</div>
+              <div class="review-actions">
+                <button type="button" class="btn btn-ghost">Keep</button>
+                <button type="button" class="btn btn-primary">Rewrite</button>
+              </div>
+            </div>
+            <div class="review-row">
+              <div class="review-kind">Select</div>
+              <div class="review-label">Work authorization</div>
+              <div class="review-why">Matched “Authorized to work” from profile.</div>
+              <div class="review-actions">
+                <button type="button" class="btn btn-ghost">Keep</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="rail-panel is-on" data-rail-panel="chat">
+            <div class="chat-log">
+              <div class="chat-msg chat-msg-magnet">
+                <div class="chat-bubble">LinkedIn is empty. Want the profile URL or skip?</div>
+                <div class="chat-time">2:08</div>
+              </div>
+              <div class="chat-msg chat-msg-you">
+                <div class="chat-bubble">use the linkedin from profile</div>
+                <div class="chat-time">2:09</div>
+              </div>
+              <div class="chat-msg chat-msg-magnet">
+                <div class="chat-bubble">Unsure about this email: Update on your application</div>
+                <div class="mail-actions">
+                  <button type="button" class="btn btn-ghost">Open email</button>
+                  <button type="button" class="btn btn-ghost">Not a reject</button>
+                </div>
+                <div class="chat-time">2:11</div>
+              </div>
+            </div>
+            <div class="chat-target">
+              <span class="chat-target-mark">Field</span>
+              <span>Why Contoso?</span>
+            </div>
+            <form class="chat-form" onsubmit="return false">
+              <textarea placeholder="Talk to Magnet…"></textarea>
+              <div class="chat-form-bar">
+                <button type="button" class="model-trigger">Composer 2 Fast ▾</button>
+                <button type="button" class="btn btn-primary">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      <nav class="shell-tabs">
+        <button type="button" class="shell-tab is-active" data-tab="jobs">Jobs</button>
+        <button type="button" class="shell-tab" data-tab="apply">Apply</button>
+        <button type="button" class="shell-tab" data-tab="chat">Chat<span class="badge">1</span></button>
+      </nav>
+
+      <div class="overlay" id="settings">
+        <div class="settings-sheet">
+          <div class="settings-head">
+            <strong>Settings</strong>
+            <button type="button" class="settings-close" id="close-settings">Done</button>
+          </div>
+          <div class="settings-group-label">Behavior</div>
+          <div class="settings-row">
+            <span>Autofill on open<span class="settings-help">Fill when a posting loads</span></span>
+            <span class="switch"></span>
+          </div>
+          <div class="settings-row">
+            <span>Review gate<span class="settings-help">Pin essays before Complete</span></span>
+            <span class="switch"></span>
+          </div>
+          <div class="settings-row">
+            <span>Autofill queue<span class="settings-help">After Autofill, run the next N empty open jobs</span></span>
+            <input class="settings-number" type="number" value="0" min="0" max="50" />
+          </div>
+          <div class="settings-row">
+            <span>Left-handed<span class="settings-help">Flip conversation tabs, page tabs, and Send</span></span>
+            <span class="switch"></span>
+          </div>
+          <div class="settings-group-label">Voice</div>
+          <textarea class="voice-text">Short, specific, no gen-UI thesis. Ops platforms, embeds, trades builds.</textarea>
+          <div class="settings-group-label">Vault</div>
+          <button type="button" class="settings-action">Import resume</button>
+          <button type="button" class="settings-action">Export bundle</button>
+          <button type="button" class="settings-action">Import bundle</button>
+          <div class="settings-group-label">Mail</div>
+          <p class="settings-help">Sign in, then scan for recruiting replies.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const stages = document.querySelectorAll(".stage");
+      const tabs = document.querySelectorAll(".shell-tab");
+      const rails = document.querySelectorAll(".rail-tab");
+      const panels = document.querySelectorAll("[data-rail-panel]");
+      const settings = document.getElementById("settings");
+      const webview = document.getElementById("webview");
+      const dash = document.getElementById("dash");
+      const splitMenu = document.getElementById("split-menu");
+      const ingestOverlay = document.getElementById("ingest-overlay");
+      const surfaceSwitch = document.getElementById("surface-switch");
+      const applyFooter = document.querySelector("[data-stage=apply] .footer-bar");
+      const applySteps = document.getElementById("apply-steps");
+      const meta = document.getElementById("meta");
+      let applyClosed = false;
+      let applyDash = false;
+
+      function showStage(name) {
+        stages.forEach((el) => el.classList.toggle("is-on", el.dataset.stage === name));
+        tabs.forEach((el) => el.classList.toggle("is-active", el.dataset.tab === name));
+      }
+
+      function showRail(name) {
+        rails.forEach((el) => el.classList.toggle("is-active", el.dataset.rail === name));
+        panels.forEach((el) => el.classList.toggle("is-on", el.dataset.railPanel === name));
+      }
+
+      function showApply(mode) {
+        showStage("apply");
+        applyDash = mode === "dash";
+        applyClosed = mode === "dash";
+        webview.hidden = applyDash;
+        dash.hidden = !applyDash;
+        surfaceSwitch.hidden = !applyClosed;
+        surfaceSwitch.textContent = applyDash ? "Posting" : "Dashboard";
+        if (applyFooter) applyFooter.hidden = applyClosed;
+      }
+
+      surfaceSwitch.addEventListener("click", () => {
+        showApply(applyDash ? "web" : "dash");
+        applyClosed = true;
+        surfaceSwitch.hidden = false;
+        surfaceSwitch.textContent = applyDash ? "Posting" : "Dashboard";
+        if (applyFooter) applyFooter.hidden = true;
+      });
+
+      tabs.forEach((el) => {
+        el.addEventListener("click", () => showStage(el.dataset.tab));
+      });
+
+      rails.forEach((el) => {
+        el.addEventListener("click", () => showRail(el.dataset.rail));
+      });
+
+      document.querySelectorAll("[data-goto]").forEach((el) => {
+        el.addEventListener("click", () => {
+          const to = el.dataset.goto;
+          if (to === "apply") showApply("web");
+          else if (to === "apply-dash") showApply("dash");
+          else if (to === "apply-web") showApply("web");
+          else if (to === "settings") {
+            settings.classList.add("is-on");
+          }
+        });
+      });
+
+      document.getElementById("ingest-from-jobs").addEventListener("click", () => {
+        showStage("chat");
+        const convTabs = document.querySelectorAll(".rail .rail-tabs")[0];
+        if (convTabs) {
+          convTabs.querySelectorAll(".rail-tab").forEach((p) => p.classList.toggle("is-active", p.textContent === "Ingest"));
+        }
+        const pageTabs = document.querySelectorAll(".rail .rail-tabs")[1];
+        if (pageTabs) pageTabs.hidden = true;
+        showRail("chat");
+      });
+      document.getElementById("ingest-back").addEventListener("click", () => {
+        ingestOverlay.hidden = true;
+      });
+      document.getElementById("ingest-approve").addEventListener("click", () => {
+        ingestOverlay.hidden = true;
+      });
+      document.getElementById("meta-toggle").addEventListener("click", () => {
+        meta.classList.toggle("is-collapsed");
+      });
+
+      document.getElementById("open-notices").addEventListener("click", () => {
+        showStage("chat");
+        showRail("chat");
+      });
+      document.getElementById("open-settings").addEventListener("click", () => {
+        settings.classList.add("is-on");
+      });
+      document.getElementById("close-settings").addEventListener("click", () => {
+        settings.classList.remove("is-on");
+      });
+      settings.addEventListener("click", (e) => {
+        if (e.target === settings) settings.classList.remove("is-on");
+      });
+
+      document.getElementById("split-toggle").addEventListener("click", () => {
+        splitMenu.classList.toggle("is-open");
+      });
+
+      document.getElementById("pass").addEventListener("click", () => showStage("jobs"));
+      document.getElementById("complete").addEventListener("click", () => showApply("dash"));
+      document.getElementById("autofill").addEventListener("click", () => {
+        applySteps.hidden = false;
+        document.querySelectorAll(".webview input:not([type=file])").forEach((input) => {
+          if (!input.value) input.value = "https://linkedin.com/in/example";
+          input.setAttribute("data-filled", "");
+        });
+      });
+    </script>
+  </body>
+</html>

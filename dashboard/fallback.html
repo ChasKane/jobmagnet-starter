@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Process</title>
+    <style>
+      body { font-family: sans-serif; background: #12141a; color: #e8eaef; padding: 24px; }
+      button.rej { width: 100%; padding: 18px; font-size: 22px; background: #dc2626; color: #fff; border: 0; border-radius: 12px; }
+    </style>
+  </head>
+  <body>
+    <p>Run <code>npm run build:ui</code> for the React dashboard. Fallback:</p>
+    <div id="name"></div>
+    <button class="rej" id="rej">Rejected</button>
+    <button id="posting">Open posting</button>
+    <script>
+      function paint(d) {
+        document.getElementById('name').textContent = d && d.job ? d.job.name + ' · ' + (d.process && d.process.status) : '';
+      }
+      if (window.magnetDash) {
+        window.magnetDash.get().then(paint);
+        window.magnetDash.onUpdate(paint);
+        document.getElementById('rej').onclick = () => window.magnetDash.rejected('').then(paint);
+        document.getElementById('posting').onclick = () => window.magnetDash.openPosting();
+      }
+    </script>
+  </body>
+</html>

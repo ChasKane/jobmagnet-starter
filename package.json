@@ -1,0 +1,33 @@
+{
+  "name": "jobmagnet",
+  "productName": "JobMagnet",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Co-edit apply browser plus process dashboard.",
+  "main": "main.js",
+  "scripts": {
+    "start": "env -u ELECTRON_RUN_AS_NODE electron .",
+    "dev": "env -u ELECTRON_RUN_AS_NODE MAGNET_DEV=1 electron .",
+    "install:app": "bash macos/install-app.sh",
+    "build:ui": "vite build --config dashboard/vite.config.js && vite build --config ingest/vite.config.js",
+    "dev:dashboard": "vite --config dashboard/vite.config.js",
+    "dev:ingest": "vite --config ingest/vite.config.js",
+    "test": "node --test --test-concurrency=1 lib/*.test.js lib/store/*.test.js lib/mail/*.test.js packages/core/*.test.js packages/persist/*.test.js packages/browser-scripts/*.test.js packages/llm/*.test.js",
+    "mobile": "npm start --prefix mobile",
+    "migrate:graph": "node lib/migrate-graph.js",
+    "action-replay": "node lib/action-replay.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "optionalDependencies": {
+    "@cursor/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^37.2.0",
+    "vite": "^5.4.11"
+  }
+}

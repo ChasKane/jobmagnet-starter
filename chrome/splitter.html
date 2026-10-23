@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <title>JobMagnet splitter</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: transparent;
+        cursor: col-resize;
+        user-select: none;
+      }
+      html:not(.is-full) body {
+        background: rgba(46, 52, 69, 0.35);
+      }
+      html:hover:not(.is-full) body,
+      html.is-dragging:not(.is-full) body {
+        background: rgba(59, 130, 246, 0.7);
+      }
+    </style>
+  </head>
+  <body>
+    <script src="splitter.js"></script>
+  </body>
+</html>

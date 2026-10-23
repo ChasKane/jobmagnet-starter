@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Library</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside id="sections" class="sections" aria-label="Stored data"></aside>
+      <div class="main">
+        <header class="toolbar">
+          <nav class="views" aria-label="Insights and library">
+            <button type="button" class="chip" data-page="insights">Insights</button>
+            <button type="button" class="chip on" data-page="library">Library</button>
+          </nav>
+          <div class="brand">
+            <h1>Library</h1>
+            <button type="button" class="btn ghost" id="refresh">Refresh</button>
+          </div>
+          <p class="note">Story cards, the autofill profile, and the logs Magnet keeps. Insights is the timeline of what those records did.</p>
+          <input id="q" type="search" placeholder="Search this section" aria-label="Search this section" />
+        </header>
+        <div class="work">
+          <div id="list" class="list"></div>
+          <div id="detail" class="detail"></div>
+        </div>
+        <p id="status" class="status" role="status"></p>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

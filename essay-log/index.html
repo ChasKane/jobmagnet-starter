@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Essay log</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="head">
+      <div class="head-row">
+        <div>
+          <div class="brand">Essay log</div>
+          <p class="note">User drafts Magnet learns from. Application log is the other checkbox — shipped form answers, kept separate.</p>
+        </div>
+        <div id="count" class="count">0</div>
+      </div>
+      <form id="filters" class="filters" autocomplete="off">
+        <input id="q" class="search" type="search" placeholder="Search company, question, or answer…" />
+        <label class="filter">
+          <span>Company</span>
+          <select id="company">
+            <option value="">All</option>
+          </select>
+        </label>
+        <label class="filter">
+          <span>Sort</span>
+          <select id="sort">
+            <option value="ts" selected>Newest</option>
+            <option value="ts-asc">Oldest</option>
+            <option value="company">Company</option>
+            <option value="label">Question</option>
+            <option value="length">Longest</option>
+          </select>
+        </label>
+        <label class="check">
+          <input id="unique" type="checkbox" checked />
+          Unique
+        </label>
+        <label class="check">
+          <input id="short" type="checkbox" />
+          Application log
+        </label>
+      </form>
+    </header>
+    <main id="list" class="list" aria-live="polite"></main>
+    <script src="app.js"></script>
+  </body>
+</html>

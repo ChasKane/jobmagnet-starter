@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sample Apply — Northwind</title>
+    <style>
+      body {
+        font-family: Georgia, serif;
+        max-width: 40rem;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background: #f7f3ea;
+        color: #1c1917;
+      }
+      label {
+        display: block;
+        margin: 0.75rem 0 0.25rem;
+        font-weight: 600;
+      }
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        font: inherit;
+      }
+      button {
+        margin-top: 1rem;
+        padding: 0.6rem 1rem;
+        font: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Northwind — Application</h1>
+    <form id="apply" onsubmit="event.preventDefault(); status.textContent='Saved locally (demo).';">
+      <label for="fullName">Full name</label>
+      <input id="fullName" name="fullName" autocomplete="name" />
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" />
+
+      <label for="role">Role</label>
+      <select id="role" name="role">
+        <option value="">Select…</option>
+        <option>Engineer</option>
+        <option>Designer</option>
+        <option>Other</option>
+      </select>
+
+      <label for="notes">Why us?</label>
+      <textarea id="notes" name="notes" rows="5"></textarea>
+
+      <h2>Employment</h2>
+      <div id="jobs">
+        <label for="employer">Employer / company name</label>
+        <input id="employer" name="employer" />
+        <label for="jobTitle">Job title</label>
+        <input id="jobTitle" name="jobTitle" />
+        <label for="startDate">Start date</label>
+        <input id="startDate" name="startDate" placeholder="YYYY-MM" />
+        <label for="endDate">End date</label>
+        <input id="endDate" name="endDate" placeholder="YYYY-MM" />
+        <label><input id="current" name="current" type="checkbox" /> I currently work here</label>
+      </div>
+      <button type="button" id="add-job">Add another position</button>
+      <script>
+        document.getElementById('add-job').addEventListener('click', () => {
+          const jobs = document.getElementById('jobs');
+          const clone = jobs.cloneNode(true);
+          clone.removeAttribute('id');
+          clone.querySelectorAll('input').forEach((i) => {
+            i.value = '';
+            i.checked = false;
+          });
+          clone.querySelectorAll('[id]').forEach((n) => {
+            const next = n.id + '-' + Math.random().toString(36).slice(2, 6);
+            clone.querySelectorAll('label[for="' + n.id + '"]').forEach((lab) => lab.setAttribute('for', next));
+            n.id = next;
+          });
+          jobs.parentNode.insertBefore(clone, document.getElementById('add-job'));
+        });
+      </script>
+
+      <button type="submit">Submit</button>
+      <p id="status"></p>
+    </form>
+  </body>
+</html>

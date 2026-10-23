@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JobMagnet</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand-row">
+        <div class="brand">JobMagnet</div>
+        <div class="brand-meta">
+          <div id="lifetime" class="lifetime" title="Lifetime submits">0</div>
+          <button type="button" id="notice-btn" class="settings-btn" title="Notices" aria-haspopup="true" aria-controls="notice-pop">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22Zm8-6v-5a8 8 0 1 0-16 0v5l-2 2v1h20v-1l-2-2Z"
+              />
+            </svg>
+            <span id="notice-badge" class="notice-badge" hidden>0</span>
+          </button>
+          <button type="button" id="insights-btn" class="settings-btn" title="Insights" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M4 19h16v2H4v-2Zm1-3 4.2-5.2 3.2 2.6L18 6.2l1.6 1.2-6.4 8.2-3.2-2.6L6.5 17.5 5 16Z"
+              />
+            </svg>
+          </button>
+          <button type="button" id="library-btn" class="settings-btn" title="Library" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M5 4h10a2 2 0 0 1 2 2v12H7a2 2 0 0 0-2 2V4Zm0 16h12v2H5a2 2 0 0 1-2-2V6h2v14Zm4-12h6v1.6H9V8Zm0 3.2h6v1.6H9v-1.6Z"
+              />
+            </svg>
+          </button>
+          <button type="button" id="essay-log-btn" class="settings-btn" title="Essay log" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 1.5V9h4.5L14 4.5ZM8 12h8v1.5H8V12Zm0 3.5h8V17H8v-1.5Zm0-7h4V10H8V8.5Z"
+              />
+            </svg>
+          </button>
+          <button type="button" id="settings-btn" class="settings-btn" title="Settings" aria-haspopup="dialog" aria-controls="settings-dialog">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.03 7.03 0 0 0-1.62-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.42l-.36 2.54c-.58.23-1.13.55-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.81 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.13.24.43.34.68.22l2.39-.96c.5.38 1.04.7 1.62.94l.36 2.54c.05.24.26.42.49.42h3.8c.23 0 .43-.18.49-.42l.36-2.54c.58-.24 1.12-.56 1.62-.94l2.39.96c.25.12.55.02.68-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="notice-pop" class="notice-pop" hidden>
+        <div class="notice-pop-head">Notices</div>
+        <div id="notice-list" class="notice-list"></div>
+      </div>
+      <div class="nav-bar" role="toolbar" aria-label="Page navigation">
+        <button type="button" id="nav-back" class="nav-btn" title="Back" disabled>←</button>
+        <button type="button" id="nav-forward" class="nav-btn" title="Forward" disabled>→</button>
+        <button type="button" id="nav-reload" class="nav-btn" title="Reload">⟳</button>
+        <button type="button" id="nav-home" class="nav-btn" title="Job posting">⌂</button>
+        <button type="button" id="nav-copy" class="nav-btn" title="Copy URL">⧉</button>
+        <button type="button" id="nav-zoom-out" class="nav-btn" title="Zoom out">−</button>
+        <button type="button" id="nav-zoom-in" class="nav-btn" title="Zoom in">+</button>
+      </div>
+      <form id="url-form" class="url-form" autocomplete="off">
+        <input id="nav-url" class="nav-url" type="url" spellcheck="false" placeholder="Search or enter address" />
+      </form>
+      <div class="filters" aria-label="Job filters">
+        <input id="search" class="search" type="search" placeholder="Search company or title…" autocomplete="off" />
+        <div class="filter-row">
+          <label class="filter">
+            <span>Status</span>
+            <select id="filter-status">
+              <option value="open" selected>Open</option>
+              <option value="submitted">Submitted</option>
+              <option value="rejected">Rejected</option>
+              <option value="passed">Passed</option>
+              <option value="all">All</option>
+            </select>
+          </label>
+          <label class="filter">
+            <span>Sort</span>
+            <select id="filter-sort">
+              <option value="updated" selected>Updated</option>
+              <option value="company">Company</option>
+              <option value="title">Title</option>
+              <option value="salary">Salary</option>
+              <option value="yoe">YoE</option>
+              <option value="level">Level</option>
+              <option value="added">Added</option>
+            </select>
+          </label>
+          <label class="filter">
+            <span>YoE</span>
+            <select id="filter-yoe"><option value="all">All</option></select>
+          </label>
+          <label class="filter">
+            <span>Level</span>
+            <select id="filter-level"><option value="all">All</option></select>
+          </label>
+        </div>
+        <div id="filter-count" class="filter-count"></div>
+        <button type="button" id="open-ingest" class="ingest-btn">Ingest</button>
+      </div>
+    </header>
+    <nav id="tab-list" class="tab-list" aria-label="Applications"></nav>
+    <footer class="footer"><span id="api-hint">API: …</span></footer>
+    <dialog id="settings-dialog" class="settings-dialog">
+      <div class="settings-sheet">
+        <div class="settings-head">
+          <strong>Settings</strong>
+          <button type="button" id="settings-close" class="settings-close">Close</button>
+        </div>
+        <form id="settings-form" class="settings-form"></form>
+        <section class="settings-group" id="settings-voice">
+          <div class="settings-group-label">Voice</div>
+          <div class="voice-toolbar">
+            <button type="button" id="voice-save" class="settings-action">Save</button>
+            <button type="button" id="voice-history" class="settings-action">History</button>
+            <button type="button" id="voice-accept-pending" class="settings-action" hidden>Apply compact</button>
+            <span id="voice-pending-badge" class="settings-status" hidden></span>
+          </div>
+          <textarea id="voice-text" class="voice-text" rows="10" spellcheck="true"></textarea>
+        </section>
+        <section class="settings-group" id="settings-prompt">
+          <div class="settings-group-label">System prompt</div>
+          <textarea id="system-prompt" class="voice-text" rows="8" spellcheck="false" disabled></textarea>
+          <button type="button" id="system-prompt-edit" class="settings-action">Edit system prompt…</button>
+        </section>
+      </div>
+    </dialog>
+    <dialog id="voice-history-modal" class="voice-modal">
+      <div class="voice-modal-head">
+        <strong>Voice history</strong>
+        <button type="button" id="voice-history-close" class="settings-close">Close</button>
+      </div>
+      <p class="voice-modal-note">User amendments, compaction, and reversions.</p>
+      <ul id="voice-history-list" class="voice-history-list"></ul>
+    </dialog>
+    <script src="filters.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

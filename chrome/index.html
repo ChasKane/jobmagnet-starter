@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <title>JobMagnet chrome</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="tracker" aria-label="Apply chrome">
+      <div class="tracker-row">
+        <div class="identity">
+          <div id="company" class="company">—</div>
+          <div id="title" class="title"></div>
+          <div id="jd-alerts" class="jd-alerts" hidden></div>
+          <div id="fill-status" class="fill-status" hidden role="status" aria-live="polite"></div>
+          <div id="session-counts" class="session-counts"></div>
+        </div>
+        <div class="progress" id="progress" hidden>
+          <ol class="steps" id="steps" aria-label="Autofill progress"></ol>
+        </div>
+        <button type="button" id="surface-switch" class="surface-switch" hidden>Dashboard</button>
+      </div>
+      <div id="hunt-login" class="hunt-login" hidden>
+        <div id="hunt-login-copy" class="hunt-login-copy"></div>
+        <div class="hunt-login-actions">
+          <button type="button" id="hunt-login-ok">I'm signed in</button>
+          <button type="button" id="hunt-login-skip">Skip this site</button>
+        </div>
+      </div>
+      <div class="meta-wrap is-collapsed" id="meta-wrap">
+        <button
+          type="button"
+          id="meta-toggle"
+          class="meta-toggle"
+          aria-expanded="false"
+          aria-controls="meta"
+          title="Show job cards"
+        >
+          ▴
+        </button>
+        <div class="meta" id="meta">
+          <div class="chip"><span class="chip-label">Salary</span><span id="salary" class="chip-value">—</span></div>
+          <div class="chip"><span class="chip-label">YoE</span><span id="yoe" class="chip-value">—</span></div>
+          <div class="chip"><span class="chip-label">Level</span><span id="level" class="chip-value">—</span></div>
+          <button type="button" id="resume-chip" class="chip resume-chip" title="Click to cycle resume variant">
+            <span class="chip-label">Resume</span>
+            <span id="resume-label" class="chip-value">—</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <form id="find-bar" class="find-bar" hidden autocomplete="off">
+      <input id="find-input" class="find-input" type="text" placeholder="Find in page" spellcheck="false" autocomplete="off" />
+      <span id="find-count" class="find-count"></span>
+      <button type="button" id="find-prev" class="find-btn">↑</button>
+      <button type="button" id="find-next" class="find-btn">↓</button>
+      <button type="button" id="find-close" class="find-btn">✕</button>
+    </form>
+    <div class="footer-bar" aria-label="Apply actions">
+      <div id="run-status" class="run-status" hidden role="status" aria-live="polite"></div>
+      <div class="footer-actions">
+        <button type="button" id="complete" class="btn btn-primary" disabled>Complete</button>
+        <div class="split" id="autofill-split">
+          <button type="button" id="autofill" class="btn btn-autofill split-main" disabled title="JD, resume, fill, and essay (⌘D)">Autofill</button>
+          <button type="button" id="autofill-menu" class="btn btn-autofill split-arrow" disabled aria-haspopup="true" aria-expanded="false" title="Run one step">▾</button>
+        </div>
+        <div id="autofill-stages" class="split-menu" hidden role="menu">
+          <button type="button" data-stage="jd" class="btn btn-stage" role="menuitem" title="Capture job description">JD</button>
+          <button type="button" data-stage="resume" class="btn btn-stage" role="menuitem" title="Upload resume (⌘U)">Resume</button>
+          <button type="button" data-stage="fill" class="btn btn-stage" role="menuitem" title="Known fields only — no LLM">Fill</button>
+          <button type="button" data-stage="essay" class="btn btn-stage" role="menuitem" title="Essays only (⌘E)">Essay</button>
+        </div>
+        <button type="button" id="pass" class="btn btn-danger" disabled>Pass</button>
+      </div>
+    </div>
+    <div class="rail">
+      <div class="rail-nav" id="rail-nav">
+        <div class="rail-tabs-wrap" id="chat-subtabs">
+          <nav id="chat-subtabs-pills" class="rail-tabs" aria-label="Conversations"></nav>
+          <button type="button" id="chat-subtabs-more" class="rail-tabs-toggle" hidden aria-haspopup="true" aria-expanded="false" title="More chats">
+            …
+          </button>
+        </div>
+        <div id="chat-more-menu" class="chat-more-menu" hidden></div>
+        <dialog id="chat-see-all" class="chat-see-all">
+          <div class="chat-see-all-head">
+            <strong>All chats</strong>
+            <button type="button" id="chat-see-all-close" class="btn btn-ghost">Close</button>
+          </div>
+          <ul id="chat-see-all-list" class="chat-see-all-list"></ul>
+        </dialog>
+        <div class="rail-tabs-wrap" id="page-rail-wrap">
+          <nav id="rail-tabs" class="rail-tabs" aria-label="Page">
+            <button type="button" class="rail-tab" data-tab="jd">JD</button>
+            <button type="button" class="rail-tab" data-tab="debug">Review</button>
+            <button type="button" class="rail-tab" data-tab="chat">Chat</button>
+          </nav>
+          <button
+            type="button"
+            id="rail-tabs-toggle"
+            class="rail-tabs-toggle"
+            aria-expanded="true"
+            aria-controls="rail-tabs"
+            title="Hide tabs"
+          >
+            ▾
+          </button>
+        </div>
+      </div>
+      <div id="panel-debug" class="rail-panel" hidden>
+        <div id="review-root" class="review-root"></div>
+      </div>
+      <div id="panel-jd" class="rail-panel" hidden>
+        <div class="drawer-row">
+          <button type="button" id="jd-clipboard" class="btn btn-ghost">Paste JD from clipboard</button>
+          <button type="button" id="jd-open-page" class="btn btn-ghost">Open posting page</button>
+        </div>
+        <div id="jd-posting-url" class="jd-url"></div>
+        <article id="jd-text" class="jd-body"></article>
+      </div>
+      <div id="panel-chat" class="rail-panel" hidden>
+        <div id="chat-open-bar" class="chat-open-bar" hidden>
+          <span id="chat-open-copy">Not this page</span>
+          <button type="button" id="chat-open-job" class="btn btn-ghost">Open</button>
+        </div>
+        <aside id="ingest-plan" class="ingest-plan" hidden>
+          <div class="ingest-plan-head">Search plan</div>
+          <dl id="ingest-plan-body" class="ingest-plan-body"></dl>
+          <button type="button" id="ingest-approve" class="ingest-approve">Go</button>
+        </aside>
+        <div id="chat-log" class="chat-log"></div>
+      </div>
+      <div class="rail-compose">
+        <div id="chat-queue" class="chat-queue" hidden></div>
+        <div id="chat-target" class="chat-target" hidden>
+          <span class="chat-target-mark">this question</span>
+          <span id="chat-target-label" class="chat-target-label"></span>
+          <button type="button" id="chat-target-clear" class="chat-hex-x" title="Clear chat target" aria-label="Clear chat target"></button>
+        </div>
+        <form id="chat-form" class="chat-form">
+          <textarea id="chat-input" rows="3" placeholder="Talk to Magnet… (Enter to send, ⌘Enter for newline)"></textarea>
+          <div class="chat-form-bar">
+            <div class="chat-form-meta">
+              <div class="model-picker" id="model-picker">
+                <button type="button" id="model-trigger" class="model-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="model-popovers">
+                  <span id="model-trigger-label" class="model-trigger-label">High Fast</span>
+                  <span class="model-chevron" aria-hidden="true">▾</span>
+                </button>
+                <div id="model-popovers" class="model-popovers" hidden>
+                  <div class="model-menu" id="model-menu" role="menu"></div>
+                  <div class="model-flyout" id="model-flyout" hidden></div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="chat-send">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <nav class="shell-tabs" aria-label="Windows">
+      <button type="button" class="shell-tab" data-pane="jobs">Jobs</button>
+      <button type="button" class="shell-tab is-active" data-pane="apply">Apply</button>
+      <button type="button" class="shell-tab" data-pane="chat">Chat</button>
+    </nav>
+    <div id="toast" class="toast" hidden>
+      <div class="toast-bar" aria-hidden="true"></div>
+      <div class="toast-row">
+        <span id="toast-msg" class="toast-msg"></span>
+        <button type="button" id="toast-undo" class="toast-undo" hidden>Undo</button>
+      </div>
+    </div>
+    <script src="jd-format.js"></script>
+    <script src="review-copy.js"></script>
+    <script src="review-control.js"></script>
+    <script src="review-insight.js"></script>
+    <script src="js-highlight.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+skills:
+  javascript:
+    years: 8
+    aliases: [js]
+  typescript:
+    years: 8
+    aliases: [ts]
+  react:
+    years: 8
+    aliases: [react.js, reactjs]
+  svelte:
+    years: 0
+  sveltekit:
+    years: 0
+    aliases: [svelte kit]
+  vue:
+    years: 0
+    aliases: [vuejs, vue.js, vue js]
+  angular:
+    years: 1
+    aliases: [angularjs, angular.js, angular js]
+  production:
+    years: 8
+    aliases: [production code, writing production, software engineering]
+  coding:
+    years: 12
+    aliases: [coding, programming]
+  nextjs:
+    years: 2
+    aliases: [next.js, next js]
+  lois:
+    years: 0
+  filevine:
+    years: 0

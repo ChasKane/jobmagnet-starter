@@ -1,0 +1,58 @@
+/** Command names shared by Electron IPC adapters and the mobile client. */
+
+const COMMANDS = [
+  'listJobs',
+  'upsertJob',
+  'removeJob',
+  'completeJob',
+  'passJob',
+  'undoOutcome',
+  'getProcess',
+  'writeProcess',
+  'appendProcessEvent',
+  'addProcessContact',
+  'getTotals',
+  'getSettings',
+  'setSettings',
+  'listResumes',
+  'importResume',
+  'pickResume',
+  'attachResume',
+  'getVoice',
+  'setVoice',
+  'getSystemPrompt',
+  'setSystemPrompt',
+  'getChat',
+  'getChatUi',
+  'getChatState',
+  'selectChat',
+  'ensureChatTab',
+  'sendChat',
+  'answerChatAsks',
+  'ingest',
+  'approveSearch',
+  'runAutofill',
+  'cancelFill',
+  'inventory',
+  'acceptReview',
+  'learnRecipe',
+  'answerReviewAsk',
+  'getReview',
+  'exportBundle',
+  'importBundle',
+  'mailStatus',
+  'mailConnect',
+  'mailSignOut',
+  'mailScan',
+  'mailImport',
+  'mailResolve',
+  'listNotices',
+  'markNoticeRead',
+  'getProfile',
+];
+
+function isCommand(name) {
+  return COMMANDS.includes(String(name || ''));
+}
+
+module.exports = { COMMANDS, isCommand };
